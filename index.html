@@ -113,7 +113,7 @@ display: block;
 <p class="text-xl text-gray-600 text-center mb-12">바이브코딩랩이 개발한 자동화 프로그램을 만나보세요</p> 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 <!-- 플레이리스트 생성기 -->
-<div class="program-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+<div class="program-card relative bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
 <div class="h-48 bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center">
 <div class="w-20 h-20 flex items-center justify-center text-white">
 <i class="ri-play-list-add-line ri-3x"></i>
@@ -126,6 +126,7 @@ display: block;
 <button class="program-detail-btn bg-white text-primary border border-primary px-4 py-2 !rounded-button hover:bg-gray-50 transition duration-300 whitespace-nowrap" data-tab="program1">자세히 보기</button>
 <a href="https://drive.google.com/file/d/1jblSTo1cTQsFwlNEOvnm4QSCvkTI00NM/view?usp=sharing" target="_blank" class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-indigo-600 transition duration-300 whitespace-nowrap">다운로드</a>
 </div>
+<span class="absolute top-4 right-4 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full animate-pulse">Now Open</span>
 </div>
 </div>
 <!-- 쇼츠 생성기 -->
@@ -583,14 +584,13 @@ display: block;
 <div class="p-6">
 <h3 class="text-xl font-bold text-gray-900 mb-2">네이버 카페</h3>
 <p class="text-gray-600 mb-6">체계적인 커뮤니티와 자료 공유를 위한 네이버 카페에서 더 많은 정보를 확인하세요.</p>
-<div class="relative">
-<a href="#" class="bg-green-500 text-white px-4 py-2 !rounded-button hover:bg-green-600 transition duration-300 inline-flex items-center whitespace-nowrap">
+<div>
+<a href="https://cafe.naver.com/vibecl" target="_blank" class="bg-green-500 text-white px-4 py-2 !rounded-button hover:bg-green-600 transition duration-300 inline-flex items-center whitespace-nowrap">
     <div class="w-5 h-5 flex items-center justify-center mr-2">
         <i class="ri-community-line"></i>
     </div>
     카페 방문하기
 </a>
-<span class="absolute -top-3 -right-3 bg-green-600 text-white text-xs px-2 py-1 rounded-full animate-pulse">오픈 예정</span>
 </div>
 </div>
 </div>
