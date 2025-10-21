@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Data API v3 설정 가이드 - 바이브코딩랩</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#4f46e5',secondary:'#10b981'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        .guide-content h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+        .guide-content h2 { font-size: 2rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; }
+        .guide-content h3 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
+        .guide-content h4 { font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .guide-content p { font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
+        .guide-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
+        .guide-content li { margin-bottom: 0.5rem; }
+        .guide-content code { background-color: #f3f4f6; color: #4b5563; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: monospace; }
+        .guide-content .button { display: inline-block; background-color: #4f46e5; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: background-color 0.3s; }
+        .guide-content .button:hover { background-color: #4338ca; }
+        .guide-content .caption { font-size: 0.9rem; color: #6b7280; text-align: center; margin-top: 1rem; margin-bottom: 2rem; }
+        .guide-content .warning, .guide-content .note { background-color: #fefce8; border-left: 4px solid #facc15; padding: 1rem; margin: 1.5rem 0; }
+        .guide-content .guide-image { width: 100%; max-width: 800px; margin: 1.5rem auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center">
+                <img src="https://static.readdy.ai/image/44bc93fdb7ef51b226b65177596745ae/2a757f0e7ad5f5b6553c8f682c39ea79.png" alt="바이브코딩랩 로고" class="h-10 w-auto">
+            </a>
+            <a href="index.html" class="text-gray-800 hover:text-primary font-medium flex items-center">
+                <i class="ri-arrow-left-line mr-1"></i> 메인으로 돌아가기
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+        <div class="bg-white p-8 md:p-12 rounded-lg shadow-lg guide-content">
+            <h1>YouTube Data API v3 키 발급 및 설정 완벽 가이드 🎬</h1>
+            <h2>YouTube 자동 업로드, 왜 API 키가 필요할까요?</h2>
+            <p>여러분이 만드신 소중한 영상 콘텐츠를 YouTube에 자동으로 업로드하고 관리하려면, 프로그램이 YouTube와 안전하게 통신할 수 있는 방법이 필요합니다. 바로 이때 사용되는 것이 <b>YouTube Data API v3 키</b>입니다. 이 API 키는 프로그램에게 "나는 권한을 가진 사용자야"라고 알려주는 일종의 비밀 열쇠와 같습니다.</p>
+            <p>이 가이드에서는 Google Cloud Platform(GCP)을 통해 YouTube Data API v3 사용 설정을 하고, 프로그램에 필요한 두 가지 중요한 정보, 즉 <b>API 키</b>와 <b>OAuth 2.0 클라이언트 ID 및 보안 비밀 (JSON 파일)</b>을 얻는 과정을 단계별로 상세히 안내해 드립니다. 조금 복잡해 보일 수 있지만, 차근차근 따라오시면 충분히 하실 수 있습니다!</p>
+            <div class="note"><b>중요 안내:</b> YouTube Data API는 사용량에 따라 할당량(Quota) 제한이 있습니다. 개인적인 용도로 자동 업로드 프로그램을 사용하는 경우 일반적으로 충분하지만, 매우 많은 영상을 자주 업로드하는 경우 할당량 문제를 겪을 수 있습니다. 이 경우 Google Cloud Platform에서 할당량 상향 요청을 고려해야 할 수 있습니다.</div>
+            
+            <h2>준비물</h2>
+            <ul>
+                <li>Google 계정 (YouTube 채널이 연결된 계정)</li>
+                <li>인터넷 연결이 가능한 PC</li>
+            </ul>
+
+            <h2>YouTube Data API v3 설정 및 키 발급 단계</h2>
+            
+            <div class="step">
+                <h3>1단계: Google Cloud Platform (GCP) 접속 및 프로젝트 선택/생성</h3>
+                <p>먼저, 웹 브라우저를 열고 Google Cloud Platform 콘솔로 이동합니다.</p>
+                <p><a class="button" href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Platform 바로가기</a></p>
+                <p>로그인 후, 화면 왼쪽 상단에서 프로젝트를 선택하거나 새 프로젝트를 생성합니다.</p>
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube1.png" alt="GCP 프로젝트 선택" class="guide-image">
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube2.png" alt="GCP 새 프로젝트 생성" class="guide-image">
+                <p class="caption">GCP 콘솔에서 프로젝트를 선택하거나 새 프로젝트를 만드는 화면입니다. 처음 사용하시는 경우, 새 프로젝트를 만들어주세요. (예: "내 유튜브 자동업로드")</p>
+            </div>
+
+            <div class="step">
+                <h3>2단계: YouTube Data API v3 사용 설정</h3>
+                <p>프로젝트가 선택된 상태에서, 왼쪽 탐색 메뉴에서 <b>'API 및 서비스' &gt; '라이브러리'</b>로 이동합니다.</p>
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube3.png" alt="API 라이브러리 메뉴" class="guide-image">
+                <p>API 라이브러리 검색창에 "<b>YouTube Data API v3</b>"를 입력하고 검색 결과에서 해당 API를 선택합니다. 그리고 <b>'사용'</b> 버튼을 클릭하여 API를 활성화합니다.</p>
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube4.png" alt="API 검색" class="guide-image">
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube5.png" alt="API 선택" class="guide-image">
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube6.png" alt="API 사용 설정" class="guide-image">
+                <p class="caption">YouTube Data API v3를 검색하고 '사용' 버튼을 누르는 화면입니다.</p>
+            </div>
+
+            <div class="step">
+                <h3>3단계: API 키 생성</h3>
+                <p>API를 활성화한 후, 프로그램이 API를 호출할 때 사용할 일반적인 API 키를 생성합니다. 왼쪽 탐색 메뉴에서 <b>'API 및 서비스' &gt; '사용자 인증 정보'</b>로 이동합니다.</p>
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube7.png" alt="사용자 인증 정보 메뉴" class="guide-image">
+                <p>화면 상단의 <b>'+ 사용자 인증 정보 만들기'</b> 버튼을 클릭하고 드롭다운 메뉴에서 <b>'API 키'</b>를 선택합니다.</p>
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube8.png" alt="API 키 만들기 선택" class="guide-image">
+                <p>API 키가 생성되면 화면에 표시됩니다. 이 키를 복사하여 안전한 곳에 보관하세요.</p>
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube9.png" alt="생성된 API 키" class="guide-image">
+            </div>
+
+            <div class="step">
+                <h3>4단계: OAuth 2.0 클라이언트 ID 생성 (가장 중요!)</h3>
+                <p>YouTube에 동영상을 '업로드'하는 행위는 사용자 계정의 권한이 필요하므로, OAuth 2.0 인증 방식을 사용해야 합니다. 이를 위해 클라이언트 ID와 클라이언트 보안 비밀이 포함된 JSON 파일을 받아야 합니다.</p>
+                <p>다시 <b>'API 및 서비스' &gt; '사용자 인증 정보'</b> 페이지로 이동하여 화면 상단의 <b>'+ 사용자 인증 정보 만들기'</b> 버튼을 클릭하고 <b>'OAuth 클라이언트 ID'</b>를 선택합니다.</p>
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube8.png" alt="OAuth 클라이언트 ID 만들기 선택" class="guide-image">
+                
+                <h4>4.1. OAuth 동의 화면 구성 (처음 설정 시)</h4>
+                <p>만약 OAuth 클라이언트 ID를 처음 만드는 경우, 'OAuth 동의 화면'을 먼저 구성하라는 메시지가 나올 수 있습니다. 안내에 따라 다음 정보를 입력합니다:</p>
+                <ul>
+                    <li><b>User Type:</b> '외부'를 선택합니다. (테스트 목적이므로)</li>
+                    <li><b>앱 이름:</b> 프로그램 이름 (예: "내 유튜브 업로더")</li>
+                    <li><b>사용자 지원 이메일:</b> 본인 이메일 주소 선택</li>
+                    <li><b>개발자 연락처 정보:</b> 본인 이메일 주소 입력</li>
+                </ul>
+                <p>나머지 필드는 대부분 기본값으로 두거나 비워두고 저장 후 계속합니다. '범위', '테스트 사용자' 설정은 지금 단계에서는 건너뛰어도 괜찮습니다.</p>
+
+                <h4>4.2. OAuth 클라이언트 ID 유형 선택 및 생성</h4>
+                <p>OAuth 동의 화면 구성 후 (또는 이미 구성된 경우), 클라이언트 ID 만들기 페이지로 돌아옵니다.</p>
+                <ul>
+                    <li><b>애플리케이션 유형:</b> <b>'데스크톱 앱'</b>을 선택합니다. (저희 프로그램은 데스크톱에서 실행됩니다)</li>
+                    <li><b>이름:</b> 클라이언트 ID의 이름 (예: "내 유튜브 업로드 프로그램 클라이언트")</li>
+                </ul>
+                <p><b>'만들기'</b> 버튼을 클릭합니다.</p>
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube10.png" alt="데스크톱 앱 선택" class="guide-image">
+
+                <h4>4.3. 클라이언트 ID 및 보안 비밀 JSON 파일 다운로드</h4>
+                <p>클라이언트 ID가 생성되면 'OAuth 클라이언트가 생성되었습니다'라는 팝업창이 뜨면서 클라이언트 ID와 클라이언트 보안 비밀번호가 표시됩니다. 여기서 가장 중요한 것은 <b>JSON 파일을 다운로드</b>하는 것입니다. 화면 우측 상단 또는 팝업창 내에 있는 <b>JSON 다운로드 아이콘(보통 아래쪽 화살표 모양)</b>을 클릭하여 <code>client_secret_xxxx.json</code> (또는 유사한 이름의) 파일을 다운로드합니다.</p>
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/youtube11.png" alt="JSON 파일 다운로드" class="guide-image">
+                <p class="caption">생성된 OAuth 클라이언트 정보와 JSON 파일 다운로드 버튼입니다.</p>
+                <div class="warning"><b>매우 중요:</b> 이 JSON 파일에는 민감한 정보가 포함되어 있으므로, 절대로 외부에 노출시키거나 버전 관리 시스템(예: Git)에 직접 커밋해서는 안 됩니다. 안전한 곳에 잘 보관하세요.</div>
+            </div>
+
+            <h2>API 키 및 OAuth JSON 파일, 프로그램에 어떻게 적용하나요?</h2>
+            <p>발급받은 정보들을 프로그램에 설정하는 방법은 다음과 같습니다:</p>
+            <ol class="list-decimal ml-5 space-y-2">
+                <li><b>프로그램 실행 및 환경설정 탭 이동:</b> 유튜브 콘텐츠 자동 생성 프로그램을 실행하고, '환경설정' 탭으로 이동합니다.</li>
+                <li><b>YouTube API Key 입력:</b> 'YouTube API Key' 입력란에 위 <b>3단계</b>에서 생성하고 복사한 API 키를 정확하게 붙여넣습니다.</li>
+                <li><b>YouTube OAuth JSON 파일 경로 지정:</b> 'OAuth JSON 파일' 항목에서 'JSON 파일 찾기...' 버튼을 사용하여 위 <b>4.3단계</b>에서 다운로드한 <code>client_secret_xxxx.json</code> 파일을 선택하여 지정합니다.</li>
+                <li><b>설정 저장 및 인증/테스트:</b> 모든 정보를 입력한 후, '모든 설정 저장' 버튼을 클릭하여 변경 사항을 저장합니다. 저장 후, '업로드 설정' 탭의 '계정 연동' 버튼을 클릭하여 YouTube 계정 인증 절차를 진행합니다.</li>
+            </ol>
+
+            <h2>마치며</h2>
+            <p>여기까지 YouTube Data API v3 사용을 위한 키 발급 및 OAuth 클라이언트 설정 과정을 알아보았습니다. 다소 복잡한 과정이었지만, 이 설정을 통해 여러분의 콘텐츠를 더욱 효율적으로 관리하고 업로드할 수 있게 될 것입니다.</p>
+            <p>API 설정 과정에서 어려움이 있거나 궁금한 점이 있다면 언제든지 문의 채널을 통해 알려주세요. 여러분의 성공적인 유튜브 채널 운영을 응원합니다! 🚀</p>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-400">ⓒ 2024 바이브코딩랩. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
