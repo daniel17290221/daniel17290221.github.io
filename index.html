@@ -52,14 +52,16 @@ display: block;
 }
 </style>
 </head>
-<body class="bg-gray-50">
-<!-- 쿠팡 파트너스 광고 배너 (스크립트 삽입) -->
-<div class="coupang-banner">
-  <script src="https://ads-partners.coupang.com/g.js"></script>
-  <script>
-  	new PartnersCoupang.G({"id":934271,"template":"carousel","trackingCode":"AF1993837","width":"160","height":"600","tsource":""});
-  </script>
-</div>
+<body class="bg-gray-50"> 
+<!-- 
+  쿠팡 파트너스 광고 배너 (임시 비활성화)
+  <div class="coupang-banner">
+    <script src="https://ads-partners.coupang.com/g.js"></script>
+    <script>
+      new PartnersCoupang.G({"id":934271,"template":"carousel","trackingCode":"AF1993837","width":"160","height":"600","tsource":""});
+    </script>
+  </div>
+-->
 <!-- 헤더 섹션 -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
 <div class="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -445,21 +447,21 @@ display: block;
             <!-- API 설정 가이드 -->
             <h3 class="text-2xl font-semibold text-gray-800 mb-6 mt-12">API 설정 가이드</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <a href="guide-gemini-api.html" target="_blank" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <a href="https://daniel17290221.github.io/guide-gemini-api.html" target="_blank" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                     <div class="flex items-center mb-3">
                         <i class="ri-key-2-line text-2xl text-primary mr-3"></i>
                         <h4 class="font-bold text-lg">Gemini API 키 발급 가이드</h4>
                     </div>
                     <p class="text-gray-600">콘텐츠 생성을 위한 Google Gemini API 키를 발급받는 방법을 안내합니다.</p>
                 </a>
-                <a href="guide-youtube-api.html" target="_blank" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <a href="https://daniel17290221.github.io/guide-youtube-api.html" target="_blank" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                     <div class="flex items-center mb-3">
                         <i class="ri-youtube-line text-2xl text-red-500 mr-3"></i>
                         <h4 class="font-bold text-lg">YouTube API 설정 가이드</h4>
                     </div>
                     <p class="text-gray-600">자동 업로드를 위한 YouTube Data API v3 키 및 OAuth 2.0 설정을 안내합니다.</p>
                 </a>
-                <a href="guide-kie-api.html" target="_blank" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <a href="https://daniel17290221.github.io/guide-kie-api.html" target="_blank" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                     <div class="flex items-center mb-3">
                         <i class="ri-robot-2-line text-2xl text-green-500 mr-3"></i>
                         <h4 class="font-bold text-lg">Kie.ai API 설정 가이드</h4>
