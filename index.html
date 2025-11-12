@@ -50,18 +50,67 @@ display: block;
     display: none;
   }
 }
+
+/* 광고 레이아웃 스타일 */
+.ad-sidebar-left, .ad-sidebar-right, .ad-bottom-fixed {
+  position: fixed;
+  z-index: 1000; /* 다른 요소들 위에 표시 */
+}
+
+/* 좌측 사이드바 광고 */
+.ad-sidebar-left {
+  left: 20px;
+  top: 100px;
+  opacity: 0.9; /* 살짝 투명하게 */
+  width: 160px; /* 너비 고정 */
+  height: 600px; /* 높이 고정 */
+  /* 광고가 없을 때를 대비한 임시 스타일 */
+  /* border: 1px dashed #ccc; */
+  /* background-color: #f0f0f0; */
+}
+
+/* 우측 사이드바 광고 (쿠팡) */
+.ad-sidebar-right {
+  right: 20px;
+  top: 100px;
+}
+
+/* 하단 고정 광고 */
+.ad-bottom-fixed {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 100%;
+  max-width: 728px; /* 최대 너비 설정 */
+  background-color: #f9f9f9;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ad-bottom-fixed .ad-close-btn {
+    position: absolute;
+    top: -25px; /* 배너 위로 살짝 올림 */
+    right: 0;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    border: none;
+    padding: 2px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 모바일 화면 대응 (1320px 이하에서 사이드바 숨기기) */
+@media (max-width: 1320px) {
+  .ad-sidebar-left, .ad-sidebar-right {
+    display: none;
+  }
+}
 </style>
 </head>
 <body class="bg-gray-50"> 
-<!-- 
-  쿠팡 파트너스 광고 배너 (임시 비활성화)
-  <div class="coupang-banner">
-    <script src="https://ads-partners.coupang.com/g.js"></script>
-    <script>
-      new PartnersCoupang.G({"id":934271,"template":"carousel","trackingCode":"AF1993837","width":"160","height":"600","tsource":""});
-    </script>
-  </div>
--->
 <!-- 헤더 섹션 -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
 <div class="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -654,6 +703,32 @@ display: block;
 </div>
 </div>
 </footer>
+
+<!-- 광고 영역 -->
+<!-- 1. 좌측 사이드바 광고 (카울리) -->
+<div id="caulyDisplay" class="ad-sidebar-left">
+    <!-- 카울리 광고 스크립트 -->
+    <script src='https://image.cauly.co.kr/websdk/common/lasted/ads.min.js'></script>
+    <script>
+      new CaulyAds({
+        app_code: 'YA6FDiXG',
+        placement: 1,
+        displayid: 'caulyDisplay',
+        passback: function () { console.log('Cauly ad failed to load.'); },
+        success: function () { console.log('Cauly ad loaded successfully.'); }
+      });
+    </script>
+</div>
+
+<!-- 2. 우측 사이드바 광고 (쿠팡 파트너스) -->
+<div class="ad-sidebar-right">
+    <!-- 여기에 쿠팡 파트너스에서 발급받은 다이나믹 배너 또는 상품 위젯 코드를 붙여넣으세요. -->
+    <script src="https://ads-partners.coupang.com/g.js"></script>
+    <script>
+        new PartnersCoupang.G({"id":934271,"template":"carousel","trackingCode":"AF1993837","width":"160","height":"600","tsource":""});
+    </script>
+</div>
+
 <script id="tabSwitcher">
 document.addEventListener('DOMContentLoaded', function() {
 // 탭 전환 기능
@@ -712,17 +787,6 @@ faqItems.forEach(item => {
     });
 });
 
-// 스크롤 따라다니는 광고 배너 기능
-window.addEventListener('scroll', function() {
-    const banner = document.querySelector('.coupang-banner');
-    if (banner) {
-        // 현재 스크롤 위치 + 헤더 높이만큼의 여백
-        const targetTop = window.scrollY + 100; 
-        
-        // 배너의 top 스타일을 업데이트하여 스크롤 위치를 따라가게 함
-        banner.style.top = targetTop + 'px';
-    }
-});
 </script>
 </body>
 </html>
