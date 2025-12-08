@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 
 # FastAPI 앱 생성
 app = FastAPI()
@@ -17,6 +18,17 @@ app.add_middleware(
 handler = app
 
 @app.get("/api/extractor")
-def get_simple_test(video_id: str = Query(None)):
-    # 어떤 요청이 오든, 무조건 성공 메시지를 반환하는 테스트용 코드
-    return {"transcript": f"서버가 성공적으로 응답했습니다. 요청하신 비디오 ID는 '{video_id}' 입니다."}
+def get_transcript(video_id: str = Query(None)):
+    if not video_id:
+        raise HTTPException(status_code=400, detail="video_id is required")
+    try:
+        # 한국어 자막을 먼저 시도하고, 없으면 영어 자막을 가져옵니다.
+        transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['ko', 'en'])
+        full_transcript = " ".join([item['text'] for item in transcript_list])
+        return {"transcript": full_transcript}
+    except TranscriptsDisabled:
+        raise HTTPException(status_code=404, detail="해당 영상은 자막 기능이 비활성화되어 있습니다.")
+    except NoTranscriptFound:
+        raise HTTPException(status_code=404, detail="영상에서 한국어 또는 영어 자막을 찾을 수 없습니다.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"서버에서 오류가 발생했습니다: {str(e)}")
