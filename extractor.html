@@ -180,7 +180,7 @@
 
             } catch (error) {
                 console.error(error);
-                displayResult('대본을 가져올 수 없습니다. 영상에 한국어 또는 영어 자막이 있는지 확인해주세요.', 'error');
+                displayResult(error.message, 'error');
             }
         });
     });
