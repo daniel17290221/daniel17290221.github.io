@@ -1,47 +1,33 @@
-from http.server import BaseHTTPRequestHandler
-import json
-from urllib.parse import urlparse, parse_qs
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 
-class handler(BaseHTTPRequestHandler):
+# FastAPI 앱 생성
+app = FastAPI()
 
-    def _send_json_response(self, status_code, data):
-        self.send_response(status_code)
-        self.send_header('Content-type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', '*') # 모든 응답에 CORS 헤더 포함
-        self.end_headers()
-        self.wfile.write(json.dumps(data).encode('utf-8'))
+# CORS 미들웨어 추가: 모든 출처에서의 요청을 허용합니다.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 모든 출처 허용
+    allow_credentials=True,
+    allow_methods=["*"],  # 모든 HTTP 메소드 허용
+    allow_headers=["*"],  # 모든 HTTP 헤더 허용
+)
 
-class handler(BaseHTTPRequestHandler):
+# Vercel에서 FastAPI 앱을 인식하도록 핸들러를 지정합니다.
+handler = app
 
-    def do_OPTIONS(self):
-        self.send_response(200, "ok")
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
-        self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-type")
-        self.end_headers()
-
-    def do_GET(self):
-        query_components = parse_qs(urlparse(self.path).query)
-        video_id = query_components.get('video_id', [None])[0]
-
-        if not video_id:
-            self._send_json_response(400, {'error': 'video_id is required'})
-            return
-
-        try:
-            # find_transcript는 수동으로 생성된 자막과 자동 생성된 자막 모두에서 찾습니다.
-            transcript = YouTubeTranscriptApi.list_transcripts(video_id).find_transcript(['ko', 'en'])
-            transcript_data = transcript.fetch()
-            full_transcript = " ".join([item['text'] for item in transcript_data])
-            
-            self._send_json_response(200, {'transcript': full_transcript})
-
-        except TranscriptsDisabled:
-            self._send_json_response(404, {'error': '해당 영상은 자막 기능이 비활성화되어 있습니다.'})
-        except NoTranscriptFound:
-            self._send_json_response(404, {'error': '영상에서 한국어 또는 영어 자막을 찾을 수 없습니다.'})
-        except Exception as e:
-            self._send_json_response(500, {'error': f'서버에서 오류가 발생했습니다: {str(e)}'})
-        
-        return
+@app.get("/api/extractor")
+def get_transcript(video_id: str = Query(None)):
+    if not video_id:
+        raise HTTPException(status_code=400, detail="video_id is required")
+    try:
+        transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['ko', 'en'])
+        full_transcript = " ".join([item['text'] for item in transcript_list])
+        return {"transcript": full_transcript}
+    except TranscriptsDisabled:
+        raise HTTPException(status_code=404, detail="해당 영상은 자막 기능이 비활성화되어 있습니다.")
+    except NoTranscriptFound:
+        raise HTTPException(status_code=404, detail="영상에서 한국어 또는 영어 자막을 찾을 수 없습니다.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"서버에서 오류가 발생했습니다: {str(e)}")
