@@ -7,14 +7,17 @@
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script>
         tailwind.config = {
+            darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        primary: '#4f46e5',
-                        secondary: '#10b981'
+                        primary: "#6366f1", 
+                        "primary-dark": "#4f46e5",
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617' }
                     },
+                    fontFamily: { sans: ['"Noto Sans KR"', 'sans-serif'] },
                     borderRadius: {
-                        'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px'
+                        DEFAULT: "0.75rem", 'xl': "1rem", '2xl': "1.5rem", 'button': '0.5rem'
                     }
                 }
             }
@@ -22,27 +25,43 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
+        }
+        .tech-grid {
+            background-image: radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.1) 1px, transparent 0);
+            background-size: 40px 40px;
+            background-attachment: fixed;
+        }
+        .glow-card {
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border-width: 1px;
+            transition: all 0.3s ease;
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="tech-grid antialiased selection:bg-primary selection:text-white">
 
     <!-- 헤더 섹션 (index.html과 동일) -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <header class="bg-slate-950/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center">
-                <img src="https://static.readdy.ai/image/44bc93fdb7ef51b226b65177596745ae/2a757f0e7ad5f5b6553c8f682c39ea79.png" alt="바이브코딩랩 로고" class="h-10 w-auto">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="https://static.readdy.ai/image/44bc93fdb7ef51b226b65177596745ae/2a757f0e7ad5f5b6553c8f682c39ea79.png" alt="바이브코딩랩 로고" class="h-10 w-auto rounded-lg">
+                <span class="text-xl font-bold text-white tracking-tight">VibeCodingLab</span>
             </a>
             <nav class="hidden md:flex space-x-8">
-                <a href="index.html" class="text-gray-800 hover:text-primary font-medium">홈</a>
-                <a href="index.html#programs" class="text-gray-800 hover:text-primary font-medium">프로그램</a>
-                <a href="index.html#guide" class="text-gray-800 hover:text-primary font-medium">사용 가이드</a>
-                <a href="index.html#contact" class="text-gray-800 hover:text-primary font-medium">함께하기</a>
+                <a href="index.html" class="text-slate-300 hover:text-white font-medium transition-colors">홈</a>
+                <a href="index.html#programs" class="text-slate-300 hover:text-white font-medium transition-colors">프로그램</a>
+                <a href="index.html#guide" class="text-slate-300 hover:text-white font-medium transition-colors">사용 가이드</a>
+                <a href="index.html#contact" class="text-slate-300 hover:text-white font-medium transition-colors">함께하기</a>
             </nav>
             <a href="https://www.youtube.com/channel/UCUgHa5wpVuCmb6w1FMAQ1eg" target="_blank" class="flex items-center bg-red-600 text-white px-4 py-2 !rounded-button hover:bg-red-700 transition duration-300 whitespace-nowrap">
                 <div class="w-5 h-5 flex items-center justify-center mr-2"><i class="ri-youtube-fill"></i></div>
@@ -56,14 +75,14 @@
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto">
                 <div class="text-center mb-12">
-                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">발표시간 계산기</h1>
-                    <p class="text-xl text-gray-600">성공적인 발표를 위한 시간 관리, 바이브코딩랩이 도와드립니다.</p>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">발표시간 계산기</h1>
+                    <p class="text-xl text-slate-400">성공적인 발표를 위한 시간 관리, 바이브코딩랩이 도와드립니다.</p>
                 </div>
 
-                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+                <div class="glow-card border border-slate-800 p-6 sm:p-8 rounded-2xl">
                     <div class="mb-6">
-                        <label for="calculation-type" class="block text-sm font-medium text-gray-700 mb-2">계산 유형 선택</label>
-                        <select id="calculation-type" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition">
+                        <label for="calculation-type" class="block text-sm font-medium text-slate-300 mb-2">계산 유형 선택</label>
+                        <select id="calculation-type" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition">
                             <option value="script-time">유튜브 대본 분량으로 영상 길이 계산</option>
                             <option value="slides">필요한 슬라이드 수 계산</option>
                             <option value="time-per-slide">슬라이드당 사용 시간 계산</option>
@@ -85,11 +104,11 @@
                     </div>
                 </div>
                 
-                <div class="mt-8 bg-indigo-50 border-l-4 border-primary p-4 rounded-r-lg">
+                <div class="mt-8 bg-indigo-900/20 border-l-4 border-primary p-4 rounded-r-lg">
                     <div class="flex">
                         <div class="py-1"><i class="ri-lightbulb-flash-line text-primary text-xl"></i></div>
                         <div class="ml-3">
-                            <p class="text-sm text-indigo-700">
+                            <p class="text-sm text-indigo-300">
                                 **팁:** 질의응답(Q&A) 시간을 고려하여 총 발표 시간을 2~3분 정도 여유롭게 설정하는 것이 좋습니다. 청중의 집중도를 위해 슬라이드당 1분 30초 내외로 계획하는 것을 추천합니다.
                             </p>
                         </div>
@@ -100,25 +119,25 @@
     </main>
 
     <!-- 푸터 (index.html과 동일) -->
-    <footer class="bg-gray-900 text-white py-12">
+    <footer class="bg-slate-950 text-white py-12 border-t border-slate-800">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-6 md:mb-0">
                     <a href="index.html" class="flex items-center">
                         <img src="https://static.readdy.ai/image/44bc93fdb7ef51b226b65177596745ae/2a757f0e7ad5f5b6553c8f682c39ea79.png" alt="바이브코딩랩 로고" class="h-10 w-auto brightness-200">
                     </a>
-                    <p class="mt-2 text-gray-400">AI로 누구나 쉽게 코딩하는 세상</p>
+                    <p class="mt-2 text-slate-400">AI로 누구나 쉽게 코딩하는 세상</p>
                 </div>
                 <div class="flex flex-col items-center md:items-end">
                     <div class="flex space-x-4 mb-4">
-                        <a href="https://www.youtube.com/channel/UCUgHa5wpVuCmb6w1FMAQ1eg" target="_blank" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition duration-300">
+                        <a href="https://www.youtube.com/channel/UCUgHa5wpVuCmb6w1FMAQ1eg" target="_blank" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-red-600 transition duration-300">
                             <div class="w-5 h-5 flex items-center justify-center"><i class="ri-youtube-fill"></i></div>
                         </a>
-                        <a href="mailto:contact@vibecoding.com" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-500 transition duration-300">
+                        <a href="mailto:contact@vibecoding.com" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-500 transition duration-300">
                             <div class="w-5 h-5 flex items-center justify-center"><i class="ri-mail-line"></i></div>
                         </a>
                     </div>
-                    <p class="text-gray-400">ⓒ 2025 바이브코딩랩. All Rights Reserved.</p>
+                    <p class="text-slate-400">ⓒ 2025 바이브코딩랩. All Rights Reserved.</p>
                 </div>
             </div>
         </div>
@@ -135,52 +154,52 @@
             slides: `
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div>
-                        <label for="total-minutes" class="block text-sm font-medium text-gray-700 mb-2">총 발표 시간 (분)</label>
-                        <input type="number" id="total-minutes" value="20" min="1" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <label for="total-minutes" class="block text-sm font-medium text-slate-300 mb-2">총 발표 시간 (분)</label>
+                        <input type="number" id="total-minutes" value="20" min="1" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
                     <div>
-                        <label for="minutes-per-slide" class="block text-sm font-medium text-gray-700 mb-2">슬라이드당 시간 (분)</label>
-                        <input type="number" id="minutes-per-slide" value="1.5" min="0.1" step="0.1" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <label for="minutes-per-slide" class="block text-sm font-medium text-slate-300 mb-2">슬라이드당 시간 (분)</label>
+                        <input type="number" id="minutes-per-slide" value="1.5" min="0.1" step="0.1" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
                 </div>
             `,
             'time-per-slide': `
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div>
-                        <label for="total-minutes" class="block text-sm font-medium text-gray-700 mb-2">총 발표 시간 (분)</label>
-                        <input type="number" id="total-minutes" value="20" min="1" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <label for="total-minutes" class="block text-sm font-medium text-slate-300 mb-2">총 발표 시간 (분)</label>
+                        <input type="number" id="total-minutes" value="20" min="1" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
                     <div>
-                        <label for="total-slides" class="block text-sm font-medium text-gray-700 mb-2">총 슬라이드 수</label>
-                        <input type="number" id="total-slides" value="15" min="1" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <label for="total-slides" class="block text-sm font-medium text-slate-300 mb-2">총 슬라이드 수</label>
+                        <input type="number" id="total-slides" value="15" min="1" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
                 </div>
             `,
             'total-time': `
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div>
-                        <label for="total-slides" class="block text-sm font-medium text-gray-700 mb-2">총 슬라이드 수</label>
-                        <input type="number" id="total-slides" value="15" min="1" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <label for="total-slides" class="block text-sm font-medium text-slate-300 mb-2">총 슬라이드 수</label>
+                        <input type="number" id="total-slides" value="15" min="1" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
                     <div>
-                        <label for="minutes-per-slide" class="block text-sm font-medium text-gray-700 mb-2">슬라이드당 시간 (분)</label>
-                        <input type="number" id="minutes-per-slide" value="1.5" min="0.1" step="0.1" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <label for="minutes-per-slide" class="block text-sm font-medium text-slate-300 mb-2">슬라이드당 시간 (분)</label>
+                        <input type="number" id="minutes-per-slide" value="1.5" min="0.1" step="0.1" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
                 </div>
             `,
             'script-time': `
                 <div class="mb-4">
-                    <label for="script-content" class="block text-sm font-medium text-gray-700 mb-2">유튜브 대본 붙여넣기</label>
-                    <textarea id="script-content" rows="8" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="이곳에 준비된 대본을 붙여넣으면 예상 영상 길이를 계산해 드립니다."></textarea>
+                    <label for="script-content" class="block text-sm font-medium text-slate-300 mb-2">유튜브 대본 붙여넣기</label>
+                    <textarea id="script-content" rows="8" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary placeholder-slate-500" placeholder="이곳에 준비된 대본을 붙여넣으면 예상 영상 길이를 계산해 드립니다."></textarea>
                 </div>
                 <div class="mb-6">
-                    <label for="speaking-speed" class="block text-sm font-medium text-gray-700 mb-2">말하기 속도 선택</label>
-                    <select id="speaking-speed" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition">
+                    <label for="speaking-speed" class="block text-sm font-medium text-slate-300 mb-2">말하기 속도 선택</label>
+                    <select id="speaking-speed" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-primary transition">
                         <option value="normal">보통 (일반적인 설명 영상, 1분당 약 240자)</option>
                         <option value="fast">빠르게 (템포가 빠른 리뷰/정보 영상, 1분당 약 300자)</option>
                     </select>
                 </div>
-                <div class="text-right text-sm text-gray-500 mb-6 -mt-4">
+                <div class="text-right text-sm text-slate-500 mb-6 -mt-4">
                     <span id="char-count">글자 수: 0자 (공백 포함)</span>
                 </div>
             `
@@ -200,8 +219,8 @@
         }
 
         function displayResult(message, isError = false) {
-            const colorClass = isError ? 'text-red-600' : 'text-green-600';
-            const bgColorClass = isError ? 'bg-red-50' : 'bg-green-50';
+            const colorClass = isError ? 'text-red-400' : 'text-green-400';
+            const bgColorClass = isError ? 'bg-red-900/20' : 'bg-green-900/20';
             const borderColorClass = isError ? 'border-red-500' : 'border-green-500';
             
             resultDisplay.innerHTML = `
