@@ -470,6 +470,23 @@ display: block;
         <span class="absolute top-4 right-4 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full animate-pulse">Now Open</span>
     </div>
 </div>
+<!-- 배당 포트폴리오 도우미 -->
+<div class="glow-card glow-card-green relative rounded-2xl overflow-hidden flex flex-col">
+    <div class="h-48 bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center">
+        <div class="w-20 h-20 flex items-center justify-center text-white">
+            <i class="ri-pie-chart-2-line ri-3x"></i>
+        </div>
+    </div>
+    <div class="p-6 flex-1 flex flex-col">
+        <h3 class="text-xl font-bold text-white mb-2">배당 포트폴리오 도우미</h3>
+        <p class="text-slate-400 mb-6 flex-1">매월 안정적인 현금 흐름을 만들 수 있도록 배당주 포트폴리오를 분석하고 최적의 종목을 제안합니다.</p>
+        <div class="flex space-x-3 mt-auto">
+            <button class="flex-1 program-detail-btn bg-slate-800 text-slate-200 border border-slate-700 px-4 py-2 !rounded-button hover:bg-slate-700 transition duration-300 whitespace-nowrap" data-tab="program13">자세히 보기</button>
+            <a href="https://us-market-ai-analyst.vercel.app/dividend" target="_blank" class="flex-1 bg-primary text-white px-4 py-2 !rounded-button hover:bg-indigo-600 transition duration-300 whitespace-nowrap text-center">사용해보기</a>
+        </div>
+        <span class="absolute top-4 right-4 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full animate-pulse">Now Open</span>
+    </div>
+</div>
 <!-- 올웨더 자동거래 프로그램 -->
 <div class="glow-card glow-card-orange rounded-2xl overflow-hidden flex flex-col">
     <div class="h-48 bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center">
@@ -505,6 +522,7 @@ display: block;
 <button class="tab-btn px-6 py-3 font-medium text-slate-400 hover:text-primary border-b-2 border-transparent" data-tab="program9">유튜브 다운로드 프로그램</button>
 <button class="tab-btn px-6 py-3 font-medium text-slate-400 hover:text-primary border-b-2 border-transparent" data-tab="program10">미국 주식 시장 분석</button>
 <button class="tab-btn px-6 py-3 font-medium text-slate-400 hover:text-primary border-b-2 border-transparent" data-tab="program11">국내 주식 시장 분석</button>
+<button class="tab-btn px-6 py-3 font-medium text-slate-400 hover:text-primary border-b-2 border-transparent" data-tab="program13">배당 포트폴리오 도우미</button>
 <button class="tab-btn px-6 py-3 font-medium text-slate-400 hover:text-primary border-b-2 border-transparent" data-tab="program12">올웨더 자동거래 프로그램</button>
 </div>
 <!-- 탭 콘텐츠 -->
@@ -712,6 +730,41 @@ display: block;
         <div class="md:w-1/2">
             <div class="bg-slate-800 rounded-lg overflow-hidden shadow-md">
                 <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/Korean_Stock_Analysis.jpeg" alt="국내 주식 시장 분석 스크린샷" class="w-full h-auto object-top">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="program13" class="tab-content">
+    <div class="flex flex-col md:flex-row gap-8">
+        <div class="md:w-1/2">
+            <h3 class="text-2xl font-bold text-white mb-4">배당 포트폴리오 도우미</h3>
+            <p class="text-slate-300 mb-6">목표 배당 수익률과 투자 성향에 맞춰 최적의 배당주 조합을 추천하고, 월별 예상 배당금을 시뮬레이션해주는 도구입니다.</p>
+            <h4 class="text-xl font-semibold text-slate-200 mb-3">주요 기능</h4>
+            <ul class="space-y-2 mb-6">
+                <li class="flex items-start">
+                    <div class="w-5 h-5 flex items-center justify-center text-primary mt-1 mr-2">
+                        <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-slate-400">월별 배당금 시뮬레이션</span>
+                </li>
+                <li class="flex items-start">
+                    <div class="w-5 h-5 flex items-center justify-center text-primary mt-1 mr-2">
+                        <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-slate-400">고배당/배당성장주 종목 추천</span>
+                </li>
+                <li class="flex items-start">
+                    <div class="w-5 h-5 flex items-center justify-center text-primary mt-1 mr-2">
+                        <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-slate-400">배당락일 및 지급일 캘린더</span>
+                </li>
+            </ul>
+            <a href="https://us-market-ai-analyst.vercel.app/dividend" target="_blank" class="bg-primary text-white px-6 py-3 !rounded-button hover:bg-indigo-600 transition duration-300 inline-block whitespace-nowrap">사용해보기</a>
+        </div>
+        <div class="md:w-1/2">
+            <div class="bg-slate-800 rounded-lg overflow-hidden shadow-md">
+                <img src="https://raw.githubusercontent.com/daniel17290221/daniel17290221.github.io/main/Dividend%20Portfolio%20Helper.jpeg" alt="배당 포트폴리오 도우미 스크린샷" class="w-full h-auto object-top">
             </div>
         </div>
     </div>
